@@ -1,0 +1,148 @@
+@goals:
+  We want to build the signature service so that:
+    * We can deploy it as a single service
+    * We can deploy it as a collection of nano-services/functions/lambdas
+    * We can use each endpoint/function/lambda from the terminal as well
+  
+  The app has to respect the 12-factor app rules:
+    
+    I. Codebase:
+      One codebase tracked in revision control, many deploys
+    
+    II. Dependencies:
+      Explicitly declare and isolate dependencies
+    
+    III. Config:
+      Store config in the environment
+
+      Outcome:
+          * we are going to use a config/app.go which parses the .env values and adds static values if needed
+    
+    IV. Backing services:
+      Treat backing services as attached resources
+
+      Outcome:
+        * when Redis and MongoDB are introduced, use docker-compose to be able to spawn locally
+
+    V. Build, release, run:
+      Strictly separate build and run stages
+
+      Outcome:
+          * define build and run stages in the build system or Makefile
+ 
+    VI. Processes:
+      Execute the app as one or more stateless processes
+        
+      Outcome: 
+          * app should be deployable as one stateless process
+          * app should be deployable as a multitude of stateless processes
+          * app should be open for interaction from cmd as well (i.e: can talk over http and over command-line)
+          
+    VII. Port binding:
+      Export services via port binding
+      
+      Outcome:
+        * define ports on docker-compose, talk to Kubernetes in production
+
+    VIII. Concurrency:
+      Scale out via the process model
+      
+      Outcome:
+        * Talk to Kubernetes for that
+
+    IX. Disposability:
+      Maximize robustness with fast startup and graceful shutdown
+    
+    X. Dev/prod parity:
+      Keep development, staging, and production as similar as possible
+    
+    XI. Logs:
+      Treat logs as event streams
+      
+      Outcome:
+        * Use Application Level Logging using Middlewares
+        * Use Instrumentation Level Logging using Middlewares
+    
+    XII. Admin processes:
+      Run admin/management tasks as one-off processes
+        
+      Outcome:
+        * define a tasks folder for such one-off processes
+
+@iteration-1
+  ☐  setup the intial app skeleton
+  ☐  add dependency management
+  ☐  add build system or makefile
+  ☐  add an http server with a dummy /health endpoint
+  ☐  add .env parsing and config management
+  ☐  add a docker image
+  ☐  add application level logging middleware
+  ☐  add instrumentation level logging middleware (look into having promeutheus locally, look into service discovery)
+
+  Note: We will try to build this service from scratch and resort to only a small subset of external tooling
+@iteration-2
+  ☐ define an interface for storage and implement it for
+    ☐ in-memory storage
+    ☐ redis storage
+    ☐ MongoDB storage
+
+  ☐ define isolated functions that can be interfaced with cmd or http or grpc
+    ☐ function: get_daemon_pub_key
+    ☐ function: store_transactions
+    ☐ function: sign_transactions
+
+  ☐ define input and output transformers/serializers for the functions depending on the protocol
+    ☐ cmd transformers/serializers: text
+    ☐ rest http transformers/serializers: json
+    ☐ grpc transformers/serializers: protobuff
+
+  ☐ test the functions in isolation with unit-tests
+    ☐ function: get_daemon_pub_key
+    ☐ function: store_transactions
+    ☐ function: sign_transactions
+
+  ☐ look into adding per-protocol integration tests
+    ☐ function: get_daemon_pub_key
+      ☐ cmd
+      ☐ rest http
+      ☐ grpc
+
+    ☐ function: store_transactions
+      ☐ cmd
+      ☐ rest http
+      ☐ grpc
+ 
+    ☐ function: sign_transactions
+      ☐ cmd
+      ☐ rest http
+      ☐ grpc
+  
+  ☐ look into adding per-protocol e2e tests for functionality
+    ☐ service: pubkey
+      ☐ cmd
+      ☐ rest http
+      ☐ grpc
+
+    ☐ service: transactions-storage
+      ☐ cmd
+      ☐ rest http
+      ☐ grpc
+
+    ☐ service: transactions-signature
+      ☐ cmd
+      ☐ rest http
+      ☐ grpc
+
+    ☐ service: signature (all)
+      ☐ cmd
+      ☐ rest http
+      ☐ grpc
+
+@iteration-3
+    ☐ look into providing multiple and different http providers
+      ☐ gin
+      ☐ GorillaMux
+      ☐ others..
+    ☐ add redis and mongodb to docker-compose
+    ☐ add ci/cd using circle-ci or some-other
+    ☐ look into deploying into heroku using containers (if it is not hasselous)
