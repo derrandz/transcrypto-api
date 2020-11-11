@@ -57,7 +57,6 @@ func (t *TransportWithSysLog) Register() {
 
 func (t *TransportWithSysLog) Start() (bool, error) {
 	t.logger.Log("Starting the http transport server...")
-	t.logger.Log("What is wrong?")
 
 	err := t.transport.httpServer.ListenAndServe()
 

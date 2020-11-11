@@ -3,9 +3,9 @@
 
 @bugs:
   ✔ Verify private key parsing/encoding and public key retrieval @done (11/11/2020, 10:23:34 PM)
-  ☐ Fix transactions retrieval for the database
-  ☐ Look into how to properly construct a json string containing the transactions array
-  ☐ abstract the signing away
+  ✔ Fix transactions retrieval for the database @done (11/11/2020, 11:05:12 PM)
+  ✔ fix config and env retrieval specially in logic @done (11/11/2020, 11:05:09 PM)
+  ✔ Look into how to properly construct a json string containing the transactions array @done (11/11/2020, 11:05:14 PM)
 
 @iteration-1
   ☐  setup the intial app skeleton
@@ -16,8 +16,8 @@
       ☐ each service is defining:
         ✔ a service interface @done (11/9/2020, 2:42:56 AM)
         ✔ a transport interface @done (11/9/2020, 2:42:56 AM)
-        ☐ a few endpoints
-          ☐ each endpoint can define transformers
+        ✔ a few endpoints @done (11/11/2020, 11:05:38 PM)
+          ✔ each endpoint can define transformers @done (11/11/2020, 11:05:37 PM)
     ✔ pkg for core functionality as packages @done (11/9/2020, 2:09:27 AM)
   ✔ config for configuration management @done (11/9/2020, 2:43:31 AM)
   ✔ add .env parsing and config management @done (11/9/2020, 2:43:31 AM)
@@ -31,8 +31,8 @@
     ☐ add application instrumentation logging (look into having promeutheus)
 
   ☐ polish http transport
-    ☐ add endpoint encoder/decoder
-    ☐ add server level json encoder/decoder
+    ✔ add endpoint encoder/decoder @done (11/11/2020, 11:05:45 PM)
+    ✔ add server level json encoder/decoder @done (11/11/2020, 11:05:47 PM)
     ☐ add endpoints finalizers to be able to write proper headers
     ☐ introduce middlewares
     ☐ fix and clearly define http status codes and response
@@ -42,7 +42,6 @@
   
   ✔ define an interface for storage and implement it for @done (11/9/2020, 5:36:08 PM)
     ✔ in-memory storage @done (11/9/2020, 5:35:44 PM)
-
 
   ☐  add a docker image
 

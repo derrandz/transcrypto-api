@@ -30,8 +30,8 @@ type (
 	}
 
 	postSignatureResponse struct {
-		message   []string
-		signature string
+		Message   []string
+		Signature string
 	}
 
 	// look into adding transformers as functions that take in requets/responses and return them transformed

@@ -62,29 +62,19 @@ func (e Endpoint) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	request, err := e.decode(r)
 	if err != nil {
 		fmt.Println("Error in decoding", err)
-		// I entertain the idea of having an error handler for each request (useful)
-		// s.errorHandler.Handle(ctx, err)
-		// s.errorEncoder(ctx, err, w)
 		return
 	}
 
 	response, err := e.funcHandler(request)
 	if err != nil {
 		fmt.Println("Error in funchandler", err)
-		// same same for error handler
-		// s.errorHandler.Handle(ctx, err)
-		// s.errorEncoder(ctx, err, w)
 		return
 	}
 
 	if err := e.encode(rw, response); err != nil {
 		fmt.Println("Error in encoding", err)
-		// s.errorHandler.Handle(ctx, err)
-		// s.errorEncoder(ctx, err, w)
 		return
 	}
-
-	rw.Write([]byte("Hello world"))
 }
 
 func JsonResponseEncoder(w http.ResponseWriter, response interface{}) error {

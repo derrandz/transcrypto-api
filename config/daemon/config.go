@@ -2,7 +2,6 @@ package daemon
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	godotenv "github.com/joho/godotenv"
@@ -15,11 +14,22 @@ type (
 	}
 )
 
+var (
+	Config *DaemonConfig = GetDaemonConfig()
+)
+
 func GetDaemonConfig() *DaemonConfig {
+	if os.Getenv("APP_ENV") == "TEST" {
+		return &DaemonConfig{
+			Port:       "8080",
+			PrivateKey: "whate3ver",
+		}
+	}
+
 	err := godotenv.Load()
 
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		fmt.Println("Error loading .env file, skipping...")
 	}
 
 	port, port_present := os.LookupEnv("PORT")

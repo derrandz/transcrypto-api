@@ -6,10 +6,9 @@ import (
 )
 
 func main() {
-	config := dcfg.GetDaemonConfig()
 	service := txHttpService.NewTxHttpService()
 
-	service.Configure(config.Port)
+	service.Configure(dcfg.Config.Port)
 	service.Run()
 	// do we need a blocker for system in here?
 	defer service.Stop()

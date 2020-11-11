@@ -1,6 +1,7 @@
 package transactions
 
 import (
+	"encoding/base64"
 	"fmt"
 )
 
@@ -14,9 +15,9 @@ func PutTransactionRequest(data interface{}) *putTransactionRequest {
 	r := new(putTransactionRequest)
 	rData := data.([]interface{})
 
-	txData := []byte(rData[0].(string))
+	txData := rData[0].(string)
 
-	r.tx = txData
+	r.tx, _ = base64.StdEncoding.DecodeString(txData)
 
 	return r
 }
@@ -32,9 +33,8 @@ func PostSignatureRequest(reqIDs interface{}) *postSignatureRequest {
 	IDs := reqIDs.([]interface{})
 	ids := make([]string, len(IDs))
 
-	for _, v := range IDs {
-		id := fmt.Sprintf("%v", v)
-		ids = append(ids, id)
+	for i, v := range IDs {
+		ids[i] = fmt.Sprintf("%v", v)
 	}
 
 	r.ids = ids
@@ -43,5 +43,5 @@ func PostSignatureRequest(reqIDs interface{}) *postSignatureRequest {
 }
 
 func PostSignatureResponse(txs []string, signature string) *postSignatureResponse {
-	return &postSignatureResponse{message: txs, signature: signature}
+	return &postSignatureResponse{Message: txs, Signature: signature}
 }

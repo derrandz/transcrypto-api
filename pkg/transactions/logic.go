@@ -4,8 +4,6 @@ import (
 	"crypto/ed25519"
 	"encoding/base64"
 	"fmt"
-
-	dcfg "summitto.com/txsigner/config/daemon"
 )
 
 func GenerateKeyPair() (publicKeyBase64, privateKeyBase64 string, publicKey ed25519.PublicKey, privateKey ed25519.PrivateKey, err error) {
@@ -35,26 +33,17 @@ func CalculatePublicKey(privateKeyBase64 string) (publicKeyBase64 string) {
 	return
 }
 
-func GetPrivateKey(retrievePrivateKey func() string) (privateKeyBase64 string, privateKey ed25519.PrivateKey, err error) {
-	envPrivateKey := retrievePrivateKey()
+func GetPrivateKey(privateKeyString string) (privateKeyBase64 string, privateKey ed25519.PrivateKey, err error) {
 	var decodedPrivateKey []byte
-	decodedPrivateKey, err = base64.StdEncoding.DecodeString(envPrivateKey)
+	decodedPrivateKey, err = base64.StdEncoding.DecodeString(privateKeyString)
 	if err != nil {
 		fmt.Println("Error decoding the private key", err)
 		return "", nil, err
 	}
-	return envPrivateKey, ed25519.PrivateKey(decodedPrivateKey), err
+	return privateKeyString, ed25519.PrivateKey(decodedPrivateKey), err
 }
 
-func GetDaemonPrivateKey() (privateKeyBase64 string, privateKey ed25519.PrivateKey, err error) {
-	privateKeyBase64, privateKey, err = GetPrivateKey(func() string {
-		return dcfg.GetDaemonConfig().PrivateKey
-	})
-	return
-}
-
-func GetDaemonPublicKey() (publicKeyBase64 string, publicKey ed25519.PublicKey, err error) {
-	privateKeyBase64, _, err := GetDaemonPrivateKey()
+func GetDaemonPublicKey(privateKeyBase64 string) (publicKeyBase64 string, publicKey ed25519.PublicKey, err error) {
 	publicKeyBase64 = CalculatePublicKey(privateKeyBase64)
 
 	publicKey, err = base64.StdEncoding.DecodeString(publicKeyBase64)

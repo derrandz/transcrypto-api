@@ -5,8 +5,9 @@ import (
 	"crypto/ed25519"
 	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"log"
+
+	dcfg "summitto.com/txsigner/config/daemon"
 )
 
 type (
@@ -22,7 +23,7 @@ type (
 )
 
 func (p *processor) GetPublicKey() string {
-	publicKeyBase64, _, err := GetDaemonPublicKey()
+	publicKeyBase64, _, err := GetDaemonPublicKey(dcfg.Config.PrivateKey)
 	if err != nil {
 		log.Fatal("Error while trying to retrieve the public key")
 		return ""
@@ -34,20 +35,18 @@ func (p *processor) SaveTransaction(data []byte) string {
 	return p.transactions.SaveTransaction(data)
 }
 
-func (p *processor) SignTransactions(ids []string) ([]string, string) {
+func (p *processor) SignTransactions(ids []string) ([]string, string) { // fix me
 	txs := p.transactions.GetTransactionsById(ids)
 	txsArr := make([]string, len(txs))
 
-	for _, tx := range txs {
-		txsArr = append(txsArr, base64.StdEncoding.EncodeToString(tx))
+	for i, tx := range txs {
+		txsArr[i] = base64.StdEncoding.EncodeToString(tx)
 	}
-
-	fmt.Printf("txsArr: %v, txs: %v", txsArr, txs)
 
 	writer := bytes.NewBufferString("")
 	json.NewEncoder(writer).Encode(txsArr)
 
-	_, privateKey, err := GetDaemonPrivateKey()
+	_, privateKey, err := GetPrivateKey(dcfg.Config.PrivateKey)
 	if err != nil {
 		log.Fatal("Error while trying to decode the private key")
 		return make([]string, 0), ""
@@ -55,13 +54,10 @@ func (p *processor) SignTransactions(ids []string) ([]string, string) {
 
 	message := []byte(writer.String())
 
-	fmt.Printf("Signed json transactions as message: %s", message)
+	signatureData := ed25519.Sign(privateKey, message)
+	signature := base64.StdEncoding.EncodeToString(signatureData)
 
-	signature := ed25519.Sign(privateKey, message)
-
-	fmt.Printf("Signature: %s", message)
-
-	return txsArr, string(signature)
+	return txsArr, signature
 }
 
 func NewProcessor() Processor {

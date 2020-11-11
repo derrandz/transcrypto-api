@@ -31,11 +31,9 @@ func (ts *txMemoryStore) GetTransactionById(id string) []byte {
 
 func (ts *txMemoryStore) GetTransactionsById(ids []string) [][]byte {
 	txs := make([][]byte, len(ids))
-	for _, id := range ids {
-		tx, correct := (ts.mem.Get(id)).([]byte)
-		if correct {
-			txs = append(txs, []byte(tx))
-		}
+	for i, id := range ids {
+		tx, _ := (ts.mem.Get(id)).([]byte)
+		txs[i] = []byte(tx)
 	}
 	return txs
 }

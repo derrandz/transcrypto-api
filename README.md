@@ -64,8 +64,6 @@ Install the project dependencies, in order to do so, issue the following command
 $ go mod download
 ```
 
-*TESTS ARE NOT IMPLEMENTED YET* You can verify that everything so far is correct by issuing the following
-command: (trigger the tests)
 ```bash
 $ make test
 ```
@@ -101,6 +99,48 @@ user@host:~$ go run cmd/txsigner/main.go
 
 *NOT IMPLEMENTED YET, SAME FOR DOCKER COMPOSE*
 
+1. Generate the key pair (look in the installation section)
+
+```bash
+$ go run tools/keys/main.go 
+env 8080 OmwQUAAXyKArmg9Cmt5W6u79K0SvmpAk+JXUoqr55yQufTzUhmeMoidMsg66a6PfJGrfRW85Tmab0jAGB4aJew==
+Generating ed25519 Private/Public Key Pair:
+Public Key: pKPMEKo7E6Ml/914t+S/3pbIow4qwoGYryEjeYA3XIk=
+Private Key: iAcnxg2OfgPkuRKefX8JbjrRVUMCdx4Q4OCEE1HvKEyko8wQqjsToyX/3Xi35L/elsijDirCgZivISN5gDdciQ==
+```
+
+2. export your environment variables like the following:
+```bash
+$ export PRIVATE_KEY=iAcnxg2OfgPkuRKefX8JbjrRVUMCdx4Q4OCEE1HvKEyko8wQqjsToyX/3Xi35L/elsijDirCgZivISN5gDdciQ==
+```
+
+3. Compile the project
+```bash
+$ make compile
+```
+
+4. Copy the executable name by navigating to `./build/bin/` and copying `txsignerhttp-$-$`
+```
+$ ls ./build/bin
+▶ txservicehttp-linux-amd64
+```
+
+5. Export the app name and the tag
+```bash
+$ export APP_NAME=txservicehttp-linux-amd64
+$ export DOCKER_TAG=1.0
+```
+
+6. Build the docker image
+```
+$ make build-docker-image
+```
+
+6. Run the docker image
+```
+$ make run-docker-container
+```
+
 ### Contribution rules
 
 - Follow GitHub flow for branching https://guides.github.com/introduction/flow/
@@ -108,12 +148,14 @@ user@host:~$ go run cmd/txsigner/main.go
 - [Unix philosophy](https://en.wikipedia.org/wiki/Unix_philosophy)
 
 ### What is currently missing? (What was supposed to be in here)
+    - [ ] Make use "context" for better context sharing
     - [ ] Proper responses HTTP Codes
     - [ ] e2e test for the service
     - [ ] integration tests for the processor and http layer of the service
     - [ ] Application level logging (log what method was called and how much time it took, could use open tracing for this)
     - [ ] Metrics (could use prometheus)
     - [ ] Proper error handling for a few functions here and there
+    - [ ] Build in a docker image for accurate target environment target
 
 ### How to quickly test that this is working properly
 
