@@ -18,11 +18,11 @@ type (
 	}
 
 	putTransactionRequest struct {
-		data []byte
+		tx []byte
 	}
 
 	putTransactionResponse struct {
-		id string
+		ID string
 	}
 
 	postSignatureRequest struct {
@@ -30,7 +30,7 @@ type (
 	}
 
 	postSignatureResponse struct {
-		message   [][]byte
+		message   []string
 		signature string
 	}
 
@@ -39,19 +39,24 @@ type (
 
 func (t *http) GetPubKey(request interface{}) (interface{}, error) {
 	pubkey := t.processor.GetPublicKey()
-	return getPubKeyResponse{PublicKey: pubkey}, nil
+	response := GetPubKeyResponse(pubkey)
+	return response, nil
 }
 
 func (t *http) PutTransaction(request interface{}) (interface{}, error) {
-	r := putTransactionRequest{data: request.([]byte)}
-	id := t.processor.SaveTransaction(r.data)
-	return putTransactionResponse{id: id}, nil
+	rqst := request.(map[string]interface{})
+	r := PutTransactionRequest(rqst["tx"])
+	id := t.processor.SaveTransaction(r.tx)
+	response := PutTransactionResponse(id)
+	return response, nil
 }
 
 func (t *http) PostSignature(request interface{}) (interface{}, error) {
-	r := postSignatureRequest{ids: request.([]string)}
+	rqst := request.(map[string]interface{})
+	r := PostSignatureRequest(rqst["ids"])
 	txs, signature := t.processor.SignTransactions(r.ids)
-	return postSignatureResponse{message: txs, signature: signature}, nil
+	response := PostSignatureResponse(txs, signature)
+	return response, nil
 }
 
 func NewHttpHandler() *http {

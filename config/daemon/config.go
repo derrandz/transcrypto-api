@@ -15,10 +15,6 @@ type (
 	}
 )
 
-var (
-	Config *DaemonConfig = GetDaemonConfig()
-)
-
 func GetDaemonConfig() *DaemonConfig {
 	err := godotenv.Load()
 

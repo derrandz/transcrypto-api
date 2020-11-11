@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-ROOT=cmd
+ROOT=${ROOT:-cmd}
 APP_NAMES=$(ls ${ROOT})
 
 for APP in ${APP_NAMES}; do

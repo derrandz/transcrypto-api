@@ -2,3 +2,4 @@ build/bin/*
 !build/bin/.gitkeep
 vendor
 .env
+coverage.txt

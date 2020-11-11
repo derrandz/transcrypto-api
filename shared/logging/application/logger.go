@@ -11,7 +11,7 @@ type (
 	}
 
 	AppLogger struct {
-		Logger  log.Logger
+		Logger  *log.Logger
 		Service *interface{}
 	}
 )

@@ -88,6 +88,7 @@ func (e Endpoint) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 }
 
 func JsonResponseEncoder(w http.ResponseWriter, response interface{}) error {
+	fmt.Println(response)
 	return json.NewEncoder(w).Encode(response)
 }
 
