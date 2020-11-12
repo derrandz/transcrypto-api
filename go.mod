@@ -1,4 +1,4 @@
-module summitto.com/txsigner
+module transcryptoapi
 
 go 1.15
 

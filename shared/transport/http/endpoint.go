@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"summitto.com/txsigner/shared/transport"
+	"transcryptoapi/shared/transport"
 )
 
 type (

@@ -1,8 +1,8 @@
 package TransactionsHttpService
 
 import (
-	tx "summitto.com/txsigner/pkg/transactions"
-	"summitto.com/txsigner/shared/transport/http"
+	tx "transcryptoapi/pkg/transactions"
+	"transcryptoapi/shared/transport/http"
 )
 
 type (

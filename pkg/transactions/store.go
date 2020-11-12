@@ -3,9 +3,10 @@ package transactions
 import (
 	"fmt"
 
+	"transcryptoapi/shared/store"
+	"transcryptoapi/shared/store/memory"
+
 	"github.com/google/uuid"
-	"summitto.com/txsigner/shared/store"
-	"summitto.com/txsigner/shared/store/memory"
 )
 
 type (

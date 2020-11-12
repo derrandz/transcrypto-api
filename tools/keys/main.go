@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"summitto.com/txsigner/pkg/transactions"
+	"transcryptoapi/pkg/transactions"
 )
 
 func main() {

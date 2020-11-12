@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	syslog "summitto.com/txsigner/shared/logging/system"
-	"summitto.com/txsigner/shared/transport"
+	syslog "transcryptoapi/shared/logging/system"
+	"transcryptoapi/shared/transport"
 )
 
 type (

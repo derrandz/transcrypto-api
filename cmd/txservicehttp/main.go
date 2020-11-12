@@ -1,8 +1,8 @@
 package main
 
 import (
-	dcfg "summitto.com/txsigner/config/daemon"
-	txHttpService "summitto.com/txsigner/protocols/http/transactions"
+	dcfg "transcryptoapi/config/daemon"
+	txHttpService "transcryptoapi/protocols/http/transactions"
 )
 
 func main() {

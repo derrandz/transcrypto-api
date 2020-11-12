@@ -1,4 +1,4 @@
-# txsigner
+# transcrypto-api
 
 ### Information
 
@@ -9,7 +9,7 @@
 
 **Description:**
 
-This repository contains all the summitto services in a monorepo manner.
+This repository contains all the transcrypto-api services in a monorepo manner.
 
 List of implemented services:
     * txsigner (microservice)
@@ -29,6 +29,8 @@ main package for any service that is exposed behind an interface (API, CLI,...).
 
 - `pkg` : The actual applications/business logic, each folder inside this folder
 represent a standalone service.
+
+- `tools` : Contains one-off processes or cli tools that the project might depend on
 
 - `shared` : The shared components and libraries which are used by all the
 systems, contains a tiny framework-like components that are being reused among all the services, e.g.

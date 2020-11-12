@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"log"
 
-	dcfg "summitto.com/txsigner/config/daemon"
+	dcfg "transcryptoapi/config/daemon"
 )
 
 type (

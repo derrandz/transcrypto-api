@@ -1,7 +1,7 @@
 #!/usr/bin/env bash 
 
 docker run \
-    --name txsigner-summitto \
+    --name txsigner-transcrypto \
     -p 8080:8080 \
     -itd \
-    summitto/txsigner:1.0
+    transcrypto/txsigner:1.0

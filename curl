@@ -1,0 +1,4 @@
+curl -X POST \
+    http://localhost:8080/signature \
+    -H "Content-Type: application/json" \
+    -d '{"ids": ["7312da7d-08eb-4f5a-aa33-4cabf74acf0f", "ee24fbe3-2e03-4427-b3c4-5e060c135c65"]}'
