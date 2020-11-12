@@ -1,5 +1,10 @@
 # txsigner
 
+### Information
+
+- `Operating system used`: Ubuntu 20.04 LTS Debian 5.4.0-52-generic
+- `GO Version`: go version go1.15.4 linux/amd64
+
 ### Abstraction
 
 **Description:**
